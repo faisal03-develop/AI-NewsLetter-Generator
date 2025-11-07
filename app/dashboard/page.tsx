@@ -1,7 +1,7 @@
 import { PageHeader } from "@/components/dashboard/page-header";
 import { Sparkles } from "lucide-react";
 import { RssFeedManager } from "@/components/dashboard/rss-feed-manager";
-
+import { NewsletterGenerator } from "@/components/dashboard/newsletter-generator";
 
 const page = () => {
   return <div className="min-h-screen linear-to-b from-white to-gray-50 dark:from-black dark:to-gray-950">
@@ -22,7 +22,7 @@ const page = () => {
 
           {/* Right Column - Newsletter Generator */}
           <div>
-            {/* <NewsletterGenerator /> */}
+            <NewsletterGenerator />
           </div>
         </div>
     </div>
