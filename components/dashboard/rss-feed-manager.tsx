@@ -61,7 +61,7 @@ export async function RssFeedManager() {
               feedLimit={feedLimit}
               isPro={isPro}
               trigger={
-                <Button className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white">
+                <Button className="bg-linear-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white">
                   <Plus className="h-4 w-4 mr-2" />
                   Add Your First Feed
                 </Button>
@@ -92,7 +92,7 @@ export async function RssFeedManager() {
                       <ExternalLink className="h-3 w-3 shrink-0" />
                     </a>
                     {feed.description && (
-                      <p className="text-sm text-muted-foreground line-clamp-2 mb-2 break-words">
+                      <p className="text-sm text-muted-foreground line-clamp-2 mb-2 wrap-break-words">
                         {feed.description}
                       </p>
                     )}
