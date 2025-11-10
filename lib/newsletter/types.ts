@@ -1,5 +1,6 @@
 import type { UserSettings } from "@prisma/client";
 
+import z from "zod";
 // ============================================
 // NEWSLETTER-SPECIFIC TYPE DEFINITIONS
 // ============================================
@@ -16,6 +17,15 @@ export interface ArticleForPrompt {
   link: string;
 }
 
+export const NewsletterSchema = z.object({
+  suggestedTitles: z.array(z.string()).length(5),
+  suggestedSubjectLines: z.array(z.string()).length(5),
+  body: z.string(),
+  topAnnouncements: z.array(z.string()).length(5),
+  additionalInfo: z.string().optional(),
+});
+
+export type GeneratedNewsletter = z.infer<typeof NewsletterSchema>;
 /**
  * Parameters for building newsletter prompt
  */

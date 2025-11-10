@@ -11,6 +11,8 @@ import {
 import { prepareFeedsAndArticles } from "@/lib/rss/feed-refresh";
 import { createNewsletter } from "./newsletter";
 import { getUserSettingsByUserId } from "./user-settings";
+import { NewsletterSchema } from "@/lib/newsletter/types";
+import { GeneratedNewsletter } from "@/lib/newsletter/types";
 
 // ============================================
 // NEWSLETTER GENERATION ACTIONS
@@ -22,15 +24,7 @@ import { getUserSettingsByUserId } from "./user-settings";
  * Defines the structure of AI-generated newsletters.
  * The AI SDK validates responses against this schema.
  */
-export const NewsletterSchema = z.object({
-  suggestedTitles: z.array(z.string()).length(5),
-  suggestedSubjectLines: z.array(z.string()).length(5),
-  body: z.string(),
-  topAnnouncements: z.array(z.string()).length(5),
-  additionalInfo: z.string().optional(),
-});
 
-export type GeneratedNewsletter = z.infer<typeof NewsletterSchema>;
 
 /**
  * Generates a newsletter with AI streaming
@@ -73,7 +67,7 @@ export async function generateNewsletterStream(params: {
 
   // Generate newsletter using AI with streaming for real-time updates
   const { partialObjectStream } = await streamObject({
-    model: openai("gpt-4o"),
+    model: openai("gpt-4.1"),
     schema: NewsletterSchema,
     prompt,
   });

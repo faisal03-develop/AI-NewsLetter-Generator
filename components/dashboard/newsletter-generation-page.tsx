@@ -7,9 +7,9 @@ import * as React from "react";
 import { toast } from "sonner";
 import { z } from "zod";
 import {
-  type GeneratedNewsletter,
   saveGeneratedNewsletter,
 } from "@/actions/generate-newsletter";
+import type { GeneratedNewsletter } from "@/lib/newsletter/types";
 import { Button } from "@/components/ui/button";
 import {
   Card,

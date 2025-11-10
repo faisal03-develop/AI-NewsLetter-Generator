@@ -5,7 +5,7 @@ import { Check, Copy, Download, Save } from "lucide-react";
 import * as React from "react";
 import ReactMarkdown from "react-markdown";
 import { toast } from "sonner";
-import type { GeneratedNewsletter } from "@/actions/generate-newsletter";
+import type { GeneratedNewsletter } from "@/lib/newsletter/types";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {

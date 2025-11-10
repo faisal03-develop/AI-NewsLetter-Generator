@@ -57,6 +57,26 @@ export async function deleteRssFeed(feedId: string) {
       ],
     });
 
+    // Find articles where the deleted feed was the primary feed
+    const articlesToUpdate = await prisma.rssArticle.findMany({
+      where: {
+        feedId: feedId,
+        sourceFeedIds: {
+          isEmpty: false, // It still has other sources
+        },
+      },
+    });
+
+    // Update their primary feedId to the first available source
+    for (const article of articlesToUpdate) {
+      await prisma.rssArticle.update({
+        where: { id: article.id },
+        data: {
+          feedId: article.sourceFeedIds[0],
+        },
+      });
+    }
+
     // Delete articles that have no more feed references (empty sourceFeedIds)
     await prisma.rssArticle.deleteMany({
       where: {
