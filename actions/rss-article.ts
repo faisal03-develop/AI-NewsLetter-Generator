@@ -15,6 +15,37 @@ import type { ArticleCreateData, BulkOperationResult } from "@/lib/rss/types";
 // RSS ARTICLE ACTIONS
 // ============================================
 
+
+// --- FIX: Helper function to safely parse the author field from an RSS feed ---
+/**
+ * Converts various author formats from RSS feeds into a single string.
+ * @param author - The author data from the RSS parser, which can be a string, an object, or null.
+ * @returns A string of the author's name, or null if not found.
+ */
+function getAuthorString(author: any): string | null {
+  if (!author) {
+    return null;
+  }
+  // Case 1: Author is already a simple string
+  if (typeof author === "string") {
+    return author;
+  }
+  // Case 2: Author is an object, common in many parsers (e.g., { name: '...' })
+  if (typeof author === "object" && author.name) {
+    // Subcase 2a: Name is an array of authors
+    if (Array.isArray(author.name)) {
+      return author.name.join(", ");
+    }
+    // Subcase 2b: Name is a single string
+    if (typeof author.name === "string") {
+      return author.name;
+    }
+  }
+  // Return null if the format is unknown or can't be parsed
+  return null;
+}
+
+
 /**
  * Creates a single RSS article with automatic deduplication using guid
  * If article already exists, adds the current feedId to sourceFeedIds for multi-source tracking
@@ -57,7 +88,8 @@ export async function createRssArticle(data: ArticleCreateData) {
         content: data.content,
         summary: data.summary,
         pubDate: data.pubDate,
-        author: data.author,
+        // --- FIX: Use the helper function to ensure author is always a string or null ---
+        author: getAuthorString(data.author) ?? "Demo user",
         categories: data.categories || [],
         imageUrl: data.imageUrl,
       },
