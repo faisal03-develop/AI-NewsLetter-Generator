@@ -66,16 +66,16 @@ export async function generateNewsletterStream(params: {
   });
 
   // Generate newsletter using AI with streaming for real-time updates
+  
   const { partialObjectStream } = await streamObject({
-    model: openai("gpt-4.1"),
+    model: openai("gpt-4o"),
     schema: NewsletterSchema,
     prompt,
   });
-
-  return {
-    stream: partialObjectStream,
-    articlesAnalyzed: articles.length,
-  };
+  
+  // Stream the AI output to the client
+  return new Response(partialObjectStream);
+  
 }
 
 /**
